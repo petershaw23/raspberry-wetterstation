@@ -9,7 +9,7 @@ __author__ = 'munnecke'
 import httplib, urllib, thingspeak, Adafruit_DHT, math
 import time
 sleep = 120
-key = '83N9AKFZ0QUCMO7M'
+key = 'HIERDENKEYREIN'
 
 # fuer taupunkt:
 A = 17.27

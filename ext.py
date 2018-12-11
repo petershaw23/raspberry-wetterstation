@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-
+import time
+time.sleep(15)
 import http.client, urllib.parse
 import thingspeak, Adafruit_DHT
 import board
 import busio
 import adafruit_bmp280
-import time
+import statistics
 
 key = 'UUIR9GYRF0SQ2SQU'
 
@@ -48,7 +49,7 @@ def ext():
     #bmp280.temperature
     bmptemp = bmp280.temperature
 	
-	#DHT22 script
+    #DHT22 script
     humidity22, temperature22 = Adafruit_DHT.read_retry(sensorDHT, pinDHT)
         
     #taupunkt
@@ -58,10 +59,11 @@ def ext():
     #luftdruck
     luftdruck = bmp280.pressure
     
-	
+    #mittelwert der temperaturen
+    mittel = statistics.median ([tempex1, tempex2, bmptemp, temperature22])
 	
 
-    params = urllib.parse.urlencode({'field1': tempex1, 'field2': tempex2, 'field3': bmptemp, 'field4': temperature22, 'field5': humidity22, 'field6': taupunkt, 'field7': luftdruck, 'key':key })
+    params = urllib.parse.urlencode({'field1': tempex1, 'field2': tempex2, 'field3': bmptemp, 'field4': temperature22, 'field5': humidity22, 'field6': taupunkt, 'field7': luftdruck, 'field8': mittel, 'key':key })
     headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
     conn = http.client.HTTPConnection("api.thingspeak.com:80")
     
@@ -75,6 +77,8 @@ def ext():
     print (humidity22)
     print (taupunkt)
     print (luftdruck)
+    print (mittel)
+    
     print (response.status, response.reason)
     data = response.read()
     conn.close()

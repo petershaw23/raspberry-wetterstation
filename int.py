@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
 import http.client, urllib.parse
-import thingspeak, Adafruit_DHT
-#import digitalio, busio, adafruit_bmp280
-import time
-
+import thingspeak
 
 key = 'OL32V7QUCKN8Y4NU'
 

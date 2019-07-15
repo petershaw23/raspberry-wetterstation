@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 import time
-time.sleep(20) #kann geloescht werden, nur bei benutzung mit crontab @reboot machts sinn
+#time.sleep(20) #kann geloescht werden, nur bei benutzung mit crontab @reboot machts sinn
 import http.client, urllib.parse
 import thingspeak, Adafruit_DHT
 import board
 import busio
 import adafruit_bmp280
-import statistics
+#import statistics
 
 key = 'UUIR9GYRF0SQ2SQU' #der thingspeak write key
 

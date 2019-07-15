@@ -8,7 +8,7 @@ import busio
 import adafruit_bmp280
 #import statistics
 
-key = 'UUIR9GYRF0SQ2SQU' #der thingspeak write key
+key = 'UUIR9GYRF0SQ2XXX' #dein thingspeak write key
 
 # variablen fuer taupunkt berechnung:
 A = 17.27

@@ -54,6 +54,8 @@ def ext():
     conn = http.client.HTTPConnection("api.thingspeak.com:80")
     conn.request("POST", "/update", params, headers)
     response = conn.getresponse()
+    
+    #for debugging, print stuff to console:
     print ('bmp temp: ' +str(bmptemp) +' rounded from: ' +str(bmptempRaw))
     print ('temp22:   ' +str(temperature22) +' rounded from: '+str(temperature22Raw))
     print ('humi22:   ' +str(humidity22) +' rounded from: '+str(humidity22Raw))
@@ -61,6 +63,7 @@ def ext():
     print ('luftdruck: '+str(luftdruck)+' rounded from: '+str(luftdruckRaw))
     print ('mittelw:   '+str(mittel)+' rounded from: '+str(mittelRaw))
     print (response.status, response.reason)
+   
     data = response.read()
     conn.close()
 

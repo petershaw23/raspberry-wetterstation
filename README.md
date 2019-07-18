@@ -1,5 +1,5 @@
 # raspberry-wetterstation
-Wetterstation mit Python
+Wetterstation: Raspberry Pi -> Python -> Thingspeak
 
 int.py: Die internen system-stats  werden über die von "pi control" (https://pi-control.de/) erstellten csv dateien ausgelesen.
 

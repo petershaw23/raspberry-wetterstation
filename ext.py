@@ -2,7 +2,8 @@
 import time
 #time.sleep(20) #kann geloescht werden, nur bei benutzung mit crontab @reboot machts sinn
 import http.client, urllib.parse
-import thingspeak, Adafruit_DHT
+#import thingspeak <- nicht benoetigt wegne http client/urllib methode
+import Adafruit_DHT
 import board
 import busio
 import adafruit_bmp280

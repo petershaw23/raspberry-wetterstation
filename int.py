@@ -2,7 +2,7 @@
 #this script extracts data from logs written by "pi-control", which you can get here:
 #https://pi-control.de/ 
 import http.client, urllib.parse
-import thingspeak
+#import thingspeak
 
 key = 'OL32V7QUCKN8Y4NU' #Thingspeak API write key
 

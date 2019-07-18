@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-
+#this script extracts data from logs written by "pi-control", which you can get here:
+#https://pi-control.de/ 
 import http.client, urllib.parse
 import thingspeak
 
-key = 'OL32V7QUCKN8Y4NU'
+key = 'OL32V7QUCKN8Y4NU' #Thingspeak API write key
 
 
 def int():
-    #extract CPU temperature from pi control csv file CORETEMP
+    #extract CPU temperature from pi control csv file CORETEMP. 
     inputfile1 = "/var/www/html/resources/log/statistic/coretemp.csv"
     with open(inputfile1, "r") as f:
         for line in f: pass
@@ -37,12 +38,13 @@ def int():
     
     conn.request("POST", "/update", params, headers)
     response = conn.getresponse()
-            
+    #for debugging:
     print (temp)
     print (freq)
     print (cpuload)
     print (ram)
     print (response.status, response.reason)
+    
     data = response.read()
     conn.close()
 

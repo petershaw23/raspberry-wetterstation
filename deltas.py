@@ -12,8 +12,8 @@ try:
     chD1 = thingspeak.Channel(843073)
     outRAWD1 = chD1.get({'results':1})
     outSplitD1 = outRAWD1.split('\"')
-    outTempD1 = outSplitD1[-10]
-    outHumiD1 = outSplitD1[-6]
+    outTempD1 = outSplitD1[-14]
+    outHumiD1 = outSplitD1[-10]
 
 
 except: #falls offline
@@ -38,7 +38,7 @@ print ('Delta H: '+str(deltaH))
 
 #write deltas to thingspeak channel
 
-key = 'KGXTB1D2NUPP4G5T' #dein thingspeak write key
+key = 'XXXXXXXXXXX' #dein thingspeak write key
 
 #write to thingspeak via urllib
 params = urllib.parse.urlencode({'field4': deltaT, 'field5': deltaH, 'key':key })

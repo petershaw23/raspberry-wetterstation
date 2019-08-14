@@ -32,7 +32,7 @@ if deltaH > 2:
 
 #write deltas to thingspeak channel
 
-key = 'KGXTB1D2NUPP4G5T' #dein thingspeak write key
+key = 'XXXX' #dein thingspeak write key
 
 #write to thingspeak via urllib
 params = urllib.parse.urlencode({'field4': deltaT, 'field5': deltaH, 'key':key })

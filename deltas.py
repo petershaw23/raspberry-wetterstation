@@ -1,5 +1,7 @@
+import time
 import http.client, urllib.parse
 import thingspeak
+time.sleep(45)
 try:
     chPi1 = thingspeak.Channel(647418)
     outRAWPi1 = chPi1.get({'results':1})
@@ -36,10 +38,10 @@ print ('Delta H: '+str(deltaH))
 
 #write deltas to thingspeak channel
 
-key = '5TDKEJ4O54B2ENBY' #dein thingspeak write key
+key = 'KGXTB1D2NUPP4G5T' #dein thingspeak write key
 
 #write to thingspeak via urllib
-params = urllib.parse.urlencode({'field1': deltaT, 'field2': deltaH, 'key':key })
+params = urllib.parse.urlencode({'field4': deltaT, 'field5': deltaH, 'key':key })
 headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
 conn = http.client.HTTPConnection("api.thingspeak.com:80")
 conn.request("POST", "/update", params, headers)
@@ -48,4 +50,5 @@ print (response.status, response.reason)
    
 data = response.read()
 conn.close()
+
 

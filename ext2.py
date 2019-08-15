@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+crontab#!/usr/bin/env python3
 import time
 time.sleep(20) #kann geloescht werden, nur bei benutzung mit crontab @reboot machts sinn
 import http.client, urllib.parse
@@ -7,6 +7,8 @@ import Adafruit_DHT
 import board
 import busio
 import adafruit_bmp280
+import json
+import requests
 #import statistics
 
 key = 'XXXXXXXXX' #der thingspeak write key
@@ -57,7 +59,7 @@ def ext():
     jsonobj2 = json.loads(data2.content.decode('utf-8'))
     tempD1 = (jsonobj2["feeds"][0]["field1"])
     humiD1 = (jsonobj2["feeds"][0]["field2"])
-
+    
 
 
     deltaT = round(float(bmptemp) - float(tempD1), 3)
@@ -76,6 +78,10 @@ def ext():
     print ('taupunkt:  '+str(taupunkt) +' rounded from: '+str(taupunktRaw))
     print ('luftdruck: '+str(luftdruck)+' rounded from: '+str(luftdruckRaw))
     print ('mittelw:   '+str(mittel)+' rounded from: '+str(mittelRaw))
+    print ('tempD1:   '+str(tempD1)+' rounded from: '+str(tempD1))
+    print ('humiD1:   '+str(humiD1)+' rounded from: '+str(humiD1))
+    print ('deltaT:   '+str(deltaT)+' rounded from: '+str(deltaT))
+    print ('deltaH:   '+str(deltaH)+' rounded from: '+str(deltaH))
     print (response.status, response.reason)
     data = response.read()
     conn.close()

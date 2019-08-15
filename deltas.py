@@ -1,14 +1,19 @@
-!/usr/bin/python3
+#!/usr/bin/python3
 import json
 import requests
 import http.client, urllib.parse
+import time
+from datetime import datetime
+Datum = datetime.now().strftime('%-d.%-m.')
+Uhrzeit = datetime.now().strftime('%H:%M')
+print (Datum, Uhrzeit)
 # pi1 data
 data1 = requests.get(url="https://api.thingspeak.com/channels/647418/feeds.json?results=1")
 jsonobj1 = json.loads(data1.content.decode('utf-8'))
 tempPi1 = (jsonobj1["feeds"][0]["field3"])
 humiPi1 = (jsonobj1["feeds"][0]["field5"])
 
-
+time.sleep(2)
 # d1 mini data
 data2 = requests.get(url="https://api.thingspeak.com/channels/843073/feeds.json?results=1")
 jsonobj2 = json.loads(data2.content.decode('utf-8'))
@@ -32,10 +37,10 @@ if deltaH > 2:
 
 #write deltas to thingspeak channel
 
-key = 'XXXX' #dein thingspeak write key
+key = 'XXXXXXXX' #dein thingspeak write key
 
 #write to thingspeak via urllib
-params = urllib.parse.urlencode({'field4': deltaT, 'field5': deltaH, 'key':key })
+params = urllib.parse.urlencode({'field1': deltaT, 'field2': deltaH, 'key':key })
 headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
 conn = http.client.HTTPConnection("api.thingspeak.com:80")
 conn.request("POST", "/update", params, headers)

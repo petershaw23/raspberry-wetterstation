@@ -1,5 +1,9 @@
-crontab#!/usr/bin/env python3
+#!/usr/bin/env python3
+from datetime import datetime
 import time
+Datum = datetime.now().strftime('%-d.%-m.')
+Uhrzeit = datetime.now().strftime('%H:%M')
+print (Datum, Uhrzeit)
 time.sleep(20) #kann geloescht werden, nur bei benutzung mit crontab @reboot machts sinn
 import http.client, urllib.parse
 #import thingspeak #old method

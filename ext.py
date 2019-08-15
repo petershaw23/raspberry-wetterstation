@@ -1,24 +1,27 @@
 #!/usr/bin/env python3
 import time
+time.sleep(20) #kann geloescht werden, nur bei benutzung mit crontab @reboot machts sinn
 import http.client, urllib.parse
-#import thingspeak <- nicht mehr benoetigt wegen http client/urllib methode
-import Adafruit_DHT #lib fuer den dht22 sensor
+#import thingspeak
+import Adafruit_DHT
 import board
 import busio
-import adafruit_bmp280 #lib fuer den bmp280 sensor
+import adafruit_bmp280
+#import statistics
 
-key = 'UUIR9GYRF0SQ2XXX' #dein thingspeak write key
+key = 'XXXXXXXXX' #der thingspeak write key
 
 # variablen fuer taupunkt berechnung:
 A = 17.27
 B = 237.7
 import math
 
-# settings fuer DHT22 sensor (=humidity22 und temperatur22):
+
+# fuer sensor DHT22 (=humidity22 und temperatur22):
 pinDHT = 27
 sensorDHT = Adafruit_DHT.DHT22
 
-#settings fuer BMP 280 luftdrucksensor (=bmptemp und luftdruck):
+#fuer BMP 280 luftdrucksensor (=bmptemp und luftdruck):
 i2c = busio.I2C(board.SCL, board.SDA)
 bmp280 = adafruit_bmp280.Adafruit_BMP280_I2C(i2c)
 #change this to match the location's pressure (hPa) at sea level
@@ -52,8 +55,6 @@ def ext():
     conn = http.client.HTTPConnection("api.thingspeak.com:80")
     conn.request("POST", "/update", params, headers)
     response = conn.getresponse()
-    
-    #for debugging, print stuff to console:
     print ('bmp temp: ' +str(bmptemp) +' rounded from: ' +str(bmptempRaw))
     print ('temp22:   ' +str(temperature22) +' rounded from: '+str(temperature22Raw))
     print ('humi22:   ' +str(humidity22) +' rounded from: '+str(humidity22Raw))
@@ -61,7 +62,6 @@ def ext():
     print ('luftdruck: '+str(luftdruck)+' rounded from: '+str(luftdruckRaw))
     print ('mittelw:   '+str(mittel)+' rounded from: '+str(mittelRaw))
     print (response.status, response.reason)
-   
     data = response.read()
     conn.close()
 

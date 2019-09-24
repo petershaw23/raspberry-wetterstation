@@ -5,7 +5,7 @@ import time
 Datum = datetime.now().strftime('%-d.%-m.')
 Uhrzeit = datetime.now().strftime('%H:%M')
 print (Datum, Uhrzeit)
-time.sleep(20) #kann geloescht werden, nur bei benutzung mit crontab @reboot machts sinn
+#time.sleep(20) #kann geloescht werden, nur bei benutzung mit crontab @reboot machts sinn
 import http.client, urllib.parse
 
 

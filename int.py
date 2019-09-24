@@ -27,7 +27,7 @@ def int():
     #ram = psutil.virtual_memory()
   
 
-    params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'field3': cpuload, 'field4': ram, 'key':key })
+    params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'field3': cpuload, 'key':key })
     headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
     conn = http.client.HTTPConnection("api.thingspeak.com:80")
     

@@ -58,23 +58,24 @@ def ext():
     
     deltaT = round(float(bmetemp) - float(tempD1), 3)
     deltaH = round(float(humidity) - float(humiD1), 3)
-
+    #taupunktD1
+    alphaD1 = ((A * tempD1) / (B + tempD1)) + math.log(humiD1/100.0)
+    taupunktRawD1 = (B * alphaD1) / (A - alphaD1)
+    taupunktD1 = "%.1f" % taupunktRawD1
     
     #write to thingspeak via urllib
-    params = urllib.parse.urlencode({'field1': deltaT, 'field2': deltaH, 'field3': bmetemp, 'field5': humidity, 'field6': taupunkt, 'field7': luftdruck, 'key':key })
+    params = urllib.parse.urlencode({'field1': deltaT, 'field2': deltaH, 'field3': bmetemp, 'field4': taupunktD1, 'field5': humidity, 'field6': taupunkt, 'field7': luftdruck, 'key':key })
     headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
     conn = http.client.HTTPConnection("api.thingspeak.com:80")
     conn.request("POST", "/update", params, headers)
     response = conn.getresponse()
     print ('bme temp: ' +str(bmetemp) +' rounded from: ' +str(bmetempRaw))
-    print ('bme humi:   '+str(humidity)+' rounded from: '+str(humidityRaw))
+    print ('bme humi:  '+str(humidity)+' rounded from: '+str(humidityRaw))
     print ('luftdruck: '+str(luftdruck)+' rounded from: '+str(luftdruckRaw))
-    
     print ('taupunkt:  '+str(taupunkt) +' rounded from: '+str(taupunktRaw))
-    
     print ('tempD1:   '+str(tempD1)+' rounded from: '+str(tempD1))
     print ('humiD1:   '+str(humiD1)+' rounded from: '+str(humiD1))
-    
+    print ('taupunktD1:'+str(taupunktD1) +' rounded from: '+str(taupunktRawD1))
     print ('deltaT:   '+str(deltaT)+' rounded from: '+str(deltaT))
     print ('deltaH:   '+str(deltaH)+' rounded from: '+str(deltaH))
     

@@ -24,6 +24,7 @@ def int():
     cpuload = psutil.cpu_percent()
 
     #ram
+    ramRaw = psutil.virtual_memory()
     ram = psutil.virtual_memory()[2]
 
     params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'field3': cpuload, 'field4': ram, 'key':key })
@@ -35,10 +36,10 @@ def int():
     #for debugging:
     print (temp)
     print (freq)
-    print (cpuload)
+    print (cpuload
+    print (ramRaw)
     print (ram)
     print (response.status, response.reason)
-    
     data = response.read()
     conn.close()
 

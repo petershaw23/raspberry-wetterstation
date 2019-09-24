@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# new version 2010. only one sensor, bme280
+# new version 2019. only one sensor, bosch bme280
 from datetime import datetime
 import time
 Datum = datetime.now().strftime('%-d.%-m.')

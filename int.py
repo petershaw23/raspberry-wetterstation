@@ -24,7 +24,7 @@ def int():
     cpuload = psutil.cpu_percent()
 
     #extract ram
-    ramRaw = psutil.phymem_usage()
+    ramRaw = psutil.virtual_memory()
     ram = ramRaw.percent
 
     params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'field3': cpuload, 'field4': ram, 'key':key })

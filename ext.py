@@ -18,7 +18,7 @@ import requests
 import math
 #import statistics
 
-key = 'XXXXXXXXX' #der thingspeak write key
+key = 'UUIR9GYRF0SQ2SQX' #der thingspeak write key
 
 # konstanten fuer taupunkt berechnung:
 A = 17.27

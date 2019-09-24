@@ -33,6 +33,7 @@ def int():
     print (freq)
     print (cpuload)
     print (ram)
+    print (ramRaw)
     print (response.status, response.reason)
     data = response.read()
     conn.close() 

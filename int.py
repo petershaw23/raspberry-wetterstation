@@ -21,8 +21,8 @@ def int():
     #cpuload
     cpuload = psutil.cpu_percent()
     #ram
-    #ram = psutil.virtual_memory()
-    params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'field3': cpuload, 'key':key })
+    ram = psutil.virtual_memory()[2]
+    params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'field3': cpuload, 'field4': ram, 'key':key })
     headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
     conn = http.client.HTTPConnection("api.thingspeak.com:80")
     conn.request("POST", "/update", params, headers)
@@ -30,7 +30,8 @@ def int():
     #for debugging:
     print (temp)
     print (freq)
-    print (cpuload
+    print (cpuload)
+    print (ram)
     print (response.status, response.reason)
     data = response.read()
     conn.close() 

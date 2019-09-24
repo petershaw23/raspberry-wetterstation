@@ -38,7 +38,7 @@ def int():
     print (freq)
     print (cpuload
     
-    print ('memory % used:', psutil.virtual_memory()[2])
+   
     print (ram)
     print (response.status, response.reason)
     data = response.read()

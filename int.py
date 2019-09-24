@@ -37,7 +37,7 @@ def int():
     print (temp)
     print (freq)
     print (cpuload
-    print (ram)
+  
     print (response.status, response.reason)
     data = response.read()
     conn.close()

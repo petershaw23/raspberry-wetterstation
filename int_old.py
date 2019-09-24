@@ -4,7 +4,7 @@
 import http.client, urllib.parse
 #import thingspeak
 
-key = 'OL32V7QUCKN8Y4NU' #Thingspeak API write key
+key = 'XXXXXXXXXXX' #Thingspeak API write key
 
 
 def int():

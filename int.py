@@ -24,8 +24,8 @@ def int():
     cpuload = psutil.cpu_percent()
 
     #ram
-    ramRaw = psutil.virtual_memory()
-    ram = psutil.virtual_memory()[2]
+    ram = psutil.virtual_memory()
+  
 
     params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'field3': cpuload, 'field4': ram, 'key':key })
     headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
@@ -37,8 +37,6 @@ def int():
     print (temp)
     print (freq)
     print (cpuload
-    
-   
     print (ram)
     print (response.status, response.reason)
     data = response.read()

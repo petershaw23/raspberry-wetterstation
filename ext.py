@@ -31,11 +31,6 @@ address = 0x77 # Adafruit BME280 address. Other BME280s may be different
 bus = smbus2.SMBus(port)
 bme280.load_calibration_params(bus,address)
 
-
-
-
-
-
 def ext():
     #bme280 read values
     bme280_data = bme280.sample(bus,address)

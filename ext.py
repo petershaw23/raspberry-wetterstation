@@ -27,7 +27,7 @@ B = 237.7
 
 #BME 280
 port = 1
-address = 0x77 # Adafruit BME280 address. Other BME280s may be different
+address = 0x76 # Adafruit BME280 address. Other BME280s may be different
 bus = smbus2.SMBus(port)
 bme280.load_calibration_params(bus,address)
 

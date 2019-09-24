@@ -3,8 +3,7 @@ Wetterstation: Raspberry Pi -> Python -> Thingspeak
 
 int.py: Die internen system-stats  werden über die von "pi control" (https://pi-control.de/) erstellten csv dateien ausgelesen.
 
-
-ext.py: Die externen sensoren DHT22 und BMP280 werden über adafruit libraries angesteuert.
+ext.py: Der Sensor bme280 wird ausgelesen (temp, humidity, air pressure)
 
 beides sendet die daten über die thingspeak API an einen thingspeak channel
 

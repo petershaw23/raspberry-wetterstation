@@ -19,19 +19,15 @@ def int():
     freqRaw = float(tFileF.read())
     freq = freqRaw/1000
     tFileF.close()
-    
-    
-
+   
     #cpuload
-    
+    cpuload = psutil.cpu_percent()
 
     #extract ram
-    #inputfile5 = "/var/www/html/resources/log/statistic/ram.csv"
-    #with open(inputfile5, "r") as j:
-    #    for line in j: pass
-    #    ram = line[11:]
+    ramRaw = psutil.phymem_usage()
+    ram = ramRaw.percent
 
-    params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'key':key })
+    params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'field3': cpuload, 'field4': ram, 'key':key })
     headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
     conn = http.client.HTTPConnection("api.thingspeak.com:80")
     
@@ -40,8 +36,8 @@ def int():
     #for debugging:
     print (temp)
     print (freq)
-    #print (cpuload)
-    #print (ram)
+    print (cpuload)
+    print (ram)
     print (response.status, response.reason)
     
     data = response.read()

@@ -1,9 +1,8 @@
 
 #!/usr/bin/env python3
-#this script extracts data from logs written by "pi-control", which you can get here:
-#https://pi-control.de/ 
-import http.client, urllib.parse
-#import thingspeak
+import http.client
+import urllib.parse
+import psutil
 
 key = 'OL32V7QUCKN8Y4NU' #Thingspeak API write key
 
@@ -23,11 +22,8 @@ def int():
     
     
 
-    #extract cpuload
-    #inputfile4 = "/var/www/html/resources/log/statistic/cpuload.csv"
-    #with open(inputfile4, "r") as i:
-    #    for line in i: pass
-    #    cpuload = line[11:]
+    #cpuload
+    
 
     #extract ram
     #inputfile5 = "/var/www/html/resources/log/statistic/ram.csv"

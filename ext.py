@@ -27,7 +27,7 @@ B = 237.7
 
 #BME 280
 port = 1
-address = 0x76 # Adafruit BME280 address. Other BME280s may be different
+address = 0x76 # BME280 address. Other BME280s may be different
 bus = smbus2.SMBus(port)
 bme280.load_calibration_params(bus,address)
 
@@ -62,8 +62,8 @@ def ext():
     #alphaD1 = ((A * tempD1) / (B + tempD1)) + math.log(humiD1/100.0)
     #taupunktRawD1 = (B * alphaD1) / (A - alphaD1)
     #taupunktD1 = "%.1f" % taupunktRawD1
-    taupunktRawD1 = '1'
-    taupunktD1 = '1'
+    taupunktRawD1 = '1'# platzhalter
+    taupunktD1 = '1' # platzhalter
     
     #write to thingspeak via urllib
     params = urllib.parse.urlencode({'field1': deltaT, 'field2': deltaH, 'field3': bmetemp, 'field4': taupunktD1, 'field5': humidity, 'field6': taupunkt, 'field7': luftdruck, 'key':key })

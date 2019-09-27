@@ -4,7 +4,7 @@ import http.client
 import urllib.parse
 import psutil
 
-key = 'OL32V7QUCKN8Y4NU' #Thingspeak API write key
+key = 'XXXXXXX' #Thingspeak API write key
 
 
 def int():

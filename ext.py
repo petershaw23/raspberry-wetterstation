@@ -11,7 +11,7 @@ import http.client, urllib.parse
 
 # import board # old?
 # import busio # old?
-import bme280
+import bme280 #dependency RPi.bme280 needed! "sudo pip3 install RPi.bme280"
 import smbus2
 import json
 import requests

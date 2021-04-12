@@ -36,7 +36,7 @@ def int():
     print (rxMB)
 
     
-    params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'field3': cpuload, 'field4': ram, 'rxMB': ram,'key':key })
+    params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'field3': cpuload, 'field4': ram, 'field5': rxMB,'key':key })
     headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
     conn = http.client.HTTPConnection("api.thingspeak.com:80")
     conn.request("POST", "/update", params, headers)

@@ -23,7 +23,20 @@ def int():
     #ram
    
     ram = psutil.virtual_memory()[2]
-    params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'field3': cpuload, 'field4': ram, 'key':key })
+    
+    #downloaded
+    with open("/proc/net/dev") as f:
+        content = f.readlines()
+    content = [x.strip() for x in content] 
+    #print (content[3])
+    lan = str(content[3]).split()
+    rxraw = int(lan[1])
+    #print (rxraw)
+    rxMB = round((rxraw / 1000 / 1000),1)
+    print (rxMB)
+
+    
+    params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'field3': cpuload, 'field4': ram, 'rxMB': ram,'key':key })
     headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
     conn = http.client.HTTPConnection("api.thingspeak.com:80")
     conn.request("POST", "/update", params, headers)

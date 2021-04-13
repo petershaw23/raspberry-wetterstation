@@ -3,6 +3,8 @@
 import http.client
 import urllib.parse
 import psutil
+import requests
+import json
 
 key = 'XXXXXXX' #Thingspeak API write key
 
@@ -22,7 +24,7 @@ def int():
     cpuload = psutil.cpu_percent()
     #ram
     ram = psutil.virtual_memory()[2]
-    #downloaded via lan 
+    #downloaded via lan ##NEW PART START############################################
     with open("/proc/net/dev") as f:
         content = f.readlines()
     content = [x.strip() for x in content] 
@@ -42,12 +44,12 @@ def int():
     # calculate deltaT and deltaH
     deltaRX = float(rxMB) - float(rxMB_old)
     print ('deltaRX: ' +str(deltaRX))
-    # calculate kb/sec average last 5 minutes
-    
-    
-  
+    # calculate kb/sec average in the last 5 minutes
+    rxAvg5min = round((deltaRX * 1000 / 300))
+    print ('average kb/sec: ' +str(rxAvg5min))
+    ##NEW PART END#################################################################
     # now write new values to thingspeak
-    params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'field3': cpuload, 'field4': ram, 'field5': rxMB, 'field6': deltaRX, 'key':key })
+    params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'field3': cpuload, 'field4': ram, 'field5': rxMB, 'field6': deltaRX, 'field7': rxAvg5min, 'key':key })
     headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
     conn = http.client.HTTPConnection("api.thingspeak.com:80")
     conn.request("POST", "/update", params, headers)

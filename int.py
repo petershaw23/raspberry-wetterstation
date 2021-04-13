@@ -58,7 +58,7 @@ def int():
         print ('average kb/sec: ' +str(rxAvg5min))
     else:
         print("Negative number")
-        rxAvg5min = 1
+        rxAvg5min = 55
         print ('average kb/sec: ' +str(rxAvg5min))
     ##NEW PART END#################################################################
     # now write new values to thingspeak

@@ -35,7 +35,7 @@ def int():
     rxMB = round((rxraw / 1000 / 1000),4)
     print (rxMB)
     # data from thingspeak
-    data = requests.get(url="https://api.thingspeak.com/channels/646236/feeds.json?results=1")
+    data = requests.get(url="https://api.thingspeak.com/channels/646236/feeds.json?results=1") #change to your channel!
     jsonobj = json.loads(data.content.decode('utf-8'))
     rxMB_old = float(jsonobj["feeds"][0]["field5"])
     print ('rxMB_old: ' +str(rxMB_old))

@@ -21,21 +21,17 @@ def int():
     #cpuload
     cpuload = psutil.cpu_percent()
     #ram
-   
     ram = psutil.virtual_memory()[2]
-    
-    #downloaded
+    #downloaded via lan 
     with open("/proc/net/dev") as f:
         content = f.readlines()
     content = [x.strip() for x in content] 
-    #print (content[3])
+    #print (content[3]) #check if correnct device, should read "eth0 ..."
     lan = str(content[3]).split()
     rxraw = int(lan[1])
     #print (rxraw)
-    rxMB = round((rxraw / 1000 / 1000),1)
+    rxMB = round((rxraw / 1000 / 1000),4)
     print (rxMB)
-
-    
     params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'field3': cpuload, 'field4': ram, 'field5': rxMB,'key':key })
     headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
     conn = http.client.HTTPConnection("api.thingspeak.com:80")

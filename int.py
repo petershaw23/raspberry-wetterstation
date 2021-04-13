@@ -45,8 +45,21 @@ def int():
     deltaRX = round(float(rxMB) - float(rxMB_old),6)
     print ('deltaRX: ' +str(deltaRX))
     # calculate kb/sec average in the last 5 minutes
-    rxAvg5min = round((deltaRX * 1000 / 300))
-    print ('average kb/sec: ' +str(rxAvg5min))
+    rxAvg5minRaw = round((deltaRX * 1000 / 300))
+    # check if positive value
+    num = float(rxAvg5minRaw)
+    if num > 0:
+        print("Positive number")
+        rxAvg5min = rxAvg5minRaw
+        print ('average kb/sec: ' +str(rxAvg5min))
+    elif num == 0:
+        print("Zero")
+        rxAvg5min = rxAvg5minRaw
+        print ('average kb/sec: ' +str(rxAvg5min))
+    else:
+        print("Negative number")
+        rxAvg5min = 1
+        print ('average kb/sec: ' +str(rxAvg5min))
     ##NEW PART END#################################################################
     # now write new values to thingspeak
     params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'field3': cpuload, 'field4': ram, 'field5': rxMB, 'field6': deltaRX, 'field7': rxAvg5min, 'key':key })

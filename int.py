@@ -32,7 +32,7 @@ def int():
     lan = str(content[3]).split()
     rxraw = int(lan[1])
     #print (rxraw)
-    rxMB = round((rxraw / 1000 / 1000),4)
+    rxMB = round((rxraw / 1000 / 1000),6)
     print (rxMB)
     # data from thingspeak
     data = requests.get(url="https://api.thingspeak.com/channels/646236/feeds.json?results=1") #change to your channel!
@@ -42,7 +42,7 @@ def int():
     last_entry = jsonobj["feeds"][0]["created_at"] #time of last entry
     print ('age of rxMB_old: ' +str(last_entry))
     # calculate deltaT and deltaH
-    deltaRX = float(rxMB) - float(rxMB_old)
+    deltaRX = round(float(rxMB) - float(rxMB_old),6)
     print ('deltaRX: ' +str(deltaRX))
     # calculate kb/sec average in the last 5 minutes
     rxAvg5min = round((deltaRX * 1000 / 300))

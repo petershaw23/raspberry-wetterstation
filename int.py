@@ -32,7 +32,7 @@ def int():
     lan = str(content[3]).split()
     rxraw = int(lan[1])
     #print (rxraw)
-    rxMB = round((rxraw / 1000 / 1000),6)
+    rxMB = round((rxraw / 1024 / 1000),6)
     print (rxMB)
     # data from thingspeak
     data = requests.get(url="https://api.thingspeak.com/channels/646236/feeds.json?results=1") #change to your channel!

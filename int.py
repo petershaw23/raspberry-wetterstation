@@ -28,11 +28,12 @@ def int():
     with open("/proc/net/dev") as f:
         content = f.readlines()
     content = [x.strip() for x in content] 
-    #print (content[3]) #check if correct device, should read "eth0 ..."
+    print (content[0]) #check if correct device, should read "eth0 ..."
+    print (content[1]) #check if correct device, should read "eth0 ..."
+    print (content[3]) #check if correct device, should read "eth0 ..."
     lan = str(content[3]).split()
     rxraw = int(lan[1])
-    txraw = int(lan[8])
-    #print (rxraw)
+    txraw = int(lan[9])
     rxMB = round((rxraw / 1024 / 1024),6)
     txMB = round((txraw / 1024 / 1024),6)
     print ('rxMB: ' +str(rxMB))

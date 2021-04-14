@@ -31,9 +31,12 @@ def int():
     #print (content[3]) #check if correct device, should read "eth0 ..."
     lan = str(content[3]).split()
     rxraw = int(lan[1])
+    txraw = int(lan[8])
     #print (rxraw)
     rxMB = round((rxraw / 1024 / 1024),6)
-    print (rxMB)
+    txMB = round((txraw / 1024 / 1024),6)
+    print ('rxMB: ' +str(rxMB))
+    print ('txMB: ' +str(txMB))
     # data from thingspeak
     data = requests.get(url="https://api.thingspeak.com/channels/646236/feeds.json?results=1") #change to your channel!
     jsonobj = json.loads(data.content.decode('utf-8'))
@@ -62,7 +65,7 @@ def int():
         print ('average kb/sec: ' +str(rxAvg5min))
     ##NEW PART END#################################################################
     # now write new values to thingspeak
-    params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'field3': cpuload, 'field4': ram, 'field5': rxMB, 'field6': deltaRX, 'field7': rxAvg5min, 'key':key })
+    params = urllib.parse.urlencode({'field1': temp, 'field2': freq, 'field3': cpuload, 'field4': ram, 'field5': rxMB, 'field6': deltaRX, 'field7': rxAvg5min, 'field8': txMB, 'key':key })
     headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
     conn = http.client.HTTPConnection("api.thingspeak.com:80")
     conn.request("POST", "/update", params, headers)

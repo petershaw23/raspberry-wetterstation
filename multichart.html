@@ -7,7 +7,7 @@
      type="text/javascript"></script>-->
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-    <script src="https://rawgithub.com/highslide-software/export-csv/master/export-csv.js"></script>
+    <script src="https://gist.githubusercontent.com/Yoldark34/0ced5f1d394c649b74eb/raw/1380e2873c67b5398ec23051af55cb86dfe3321f/export-csv.js"></script>
     <script type="text/javascript">
       
       // Webpage Javascript to chart multiple ThingSpeak channels on two axis with navigator, load historical data, and export cvs data.
@@ -22,14 +22,15 @@ var channelsLoaded = 0;
 // fieldList shows which field you want to load, and which axis to display that field on, 
 // the 'T' Temperature left axis, or the 'O' Other right axis.
 var channelKeys =[];
-channelKeys.push({channelNumber:647418, name:'Temp, Dewpoint',key:'JRCYSXIL47ECGL79',
-   fieldList:[{field:3,axis:'C'},{field:4,axis:'C'},{field:6,axis:'C'},{field:8,axis:'C'}]});
-   channelKeys.push({channelNumber:647418, name:'Pressure, Humidity',key:'JRCYSXIL47ECGL79',
-   fieldList:[{field:5,axis:'R'},{field:7,axis:'R'}]});
-
+//Change TO: display two fields from the same channel from a Rain gauge - 15min counts, and total counts
+//  src="https://api.thingspeak.com/channels/8652/charts/3?width=1300&height=400&results=1000&dynamic=true&title=Temp and RAM" ></iframe>
+channelKeys.push({channelNumber:1287367, name:'Pi4',key:'XXXXXXXXXXXXXXXXXX',
+   fieldList:[{field:1,axis:'C'},{field:4,axis:'R'}]});
+ 
     
 // user's timezone offset
 var myOffset = new Date().getTimezoneOffset();
+
 // converts date format from JSON
 function getChartDate(d) {
     // get the data using javascript's date object (year, month, day, hour, minute, second)
@@ -37,6 +38,7 @@ function getChartDate(d) {
     // offset in minutes is converted to milliseconds and subtracted so that chart's x-axis is correct
     return Date.UTC(d.substring(0,4), d.substring(5,7)-1, d.substring(8,10), d.substring(11,13), d.substring(14,16), d.substring(17,19)) - (myOffset * 60000);
 }
+
       // Hide all series, via 'Hide All' button.  Then user can click on serries name in legent to show series of interest.      
 function HideAll(){
   for (var index=0; index<dynamicChart.series.length; index++)  // iterate through each series
@@ -88,7 +90,7 @@ $(document).ready(function()
    var fieldList= sentFieldList;
    var channelIndex = sentChannelIndex;
    // get the Channel data with a webservice call
- 	$.getJSON('https://www.thingspeak.com/channels/'+channelNumber+'/feed.json?callback=?&amp;offset=0&amp;results=2500;key='+key, function(data) 
+ 	$.getJSON('https://api.thingspeak.com/channels/'+channelNumber+'/feed.json?&offset=0&results=2500;key='+key, function(data)
    {
 	   // if no access
 	   if (data == '-1') {
@@ -144,7 +146,7 @@ $(document).ready(function()
                (function(channelIndex)
                {
                 // get the data with a webservice call
-                $.getJSON('https://www.thingspeak.com/channels/'+channelKeys[channelIndex].channelNumber+'/feed/last.json?callback=?&amp;offset=0&amp;location=false;key='+channelKeys[channelIndex].key, function(data) 
+                $.getJSON('https://api.thingspeak.com/channels/'+channelKeys[channelIndex].channelNumber+'/feed/last.json?offset=0&amp;location=false;key='+channelKeys[channelIndex].key, function(data) 
                 { 
                   for (var fieldIndex=0; fieldIndex<channelKeys[channelIndex].fieldList.length; fieldIndex++)
                   {
@@ -182,16 +184,16 @@ $(document).ready(function()
                })(channelIndex);
               }
              }
-						}, 30000);
+						}, 15000);
 					}
 				}
 			}
 		},
 		rangeSelector: {
 			buttons: [{
-				count: 6,
-				type: 'hour',
-				text: '6H'
+				count: 30,
+				type: 'minute',
+				text: '30M'
 			}, {
 				count: 12,
 				type: 'hour',
@@ -217,7 +219,7 @@ $(document).ready(function()
 				text: 'All'
 			}],
 			inputEnabled: true,
-			selected: 1  //Change to 1st button as default
+			selected: 4  //Change to 4th button as default
 		},
     title: {
 			text: ''
@@ -244,8 +246,10 @@ $(document).ready(function()
 		},
     tooltip: {
       valueDecimals: 1,
-      valueSuffix: '',
+      valueSuffix: '(0.01")',
       xDateFormat:'%Y-%m-%d<br/>%H:%M:%S %p' //bug fix
+
+
 			// reformat the tooltips so that local times are displayed
 			//formatter: function() {
       //var d = new Date(this.x + (myOffset*60000));
@@ -267,18 +271,18 @@ $(document).ready(function()
 		},
 		yAxis: [{
             title: {
-                text: 'Humidity / Pressure'
+                text: 'Temp'
             },
             id: 'R'
     }, {
             title: {
-                text: 'Temp °C'
+                text: 'RAM usage'
             },
-            opposite: false,
+            opposite: true,
             id: 'C'
     }],
 		exporting: {
-		  enabled: false,
+		  enabled: true,
       csv: {
         dateFormat: '%d/%m/%Y %I:%M:%S %p'
         }
@@ -295,6 +299,7 @@ $(document).ready(function()
     series: []
     //series: [{data:[[getChartDate("2013-06-16T00:32:40Z"),75]]}]      
 	};
+
 	// add all Channel data to the chart
   for (var channelIndex=0; channelIndex<channelKeys.length; channelIndex++)  // iterate through each channel
   {
@@ -304,24 +309,17 @@ $(document).ready(function()
       chartOptions.series.push({data:channelKeys[channelIndex].fieldList[fieldIndex].data,
                                 index:channelKeys[channelIndex].fieldList[fieldIndex].series,
                                 yAxis:channelKeys[channelIndex].fieldList[fieldIndex].axis,
-                                visible:false,
-                              name: channelKeys[channelIndex].fieldList[fieldIndex].name});
-    }
-	 for (var fieldIndex=3; fieldIndex<channelKeys[channelIndex].fieldList.length; fieldIndex++)  // add each field
-    {
-      window.console && console.log('Channel '+channelIndex+' field '+fieldIndex);
-      chartOptions.series.push({data:channelKeys[channelIndex].fieldList[fieldIndex].data,
-                                index:channelKeys[channelIndex].fieldList[fieldIndex].series,
-                                yAxis:channelKeys[channelIndex].fieldList[fieldIndex].axis,
-                                visible:true,
+                                //visible:false,
                               name: channelKeys[channelIndex].fieldList[fieldIndex].name});
     }
   }
 	// set chart labels here so that decoding occurs properly
 	//chartOptions.title.text = data.channel.name;
 	chartOptions.xAxis.title.text = 'Date';
+
 	// draw the chart
   dynamicChart = new Highcharts.StockChart(chartOptions);
+
   // update series number to account for the navigator series (The historical series at the bottom) which is the first series.
   for (var channelIndex=0; channelIndex<channelKeys.length; channelIndex++)  // iterate through each channel
   {
@@ -359,6 +357,7 @@ function loadOneChannel(){
   var channelIndex = selectedChannel.selectedIndex;
   loadChannelHistory(channelIndex,channelKeys[channelIndex].channelNumber,channelKeys[channelIndex].key,channelKeys[channelIndex].fieldList,0,maxLoads); 
 } 
+
 // load next 8000 points from a ThingSpeak channel and addPoints to a series
 function loadChannelHistory(sentChannelIndex,channelNumber,key,sentFieldList,sentNumLoads,maxLoads) {
    var numLoads=sentNumLoads
@@ -378,7 +377,7 @@ function loadChannelHistory(sentChannelIndex,channelNumber,key,sentFieldList,sen
    window.console && console.log('sentChannelIndex:',sentChannelIndex);
    window.console && console.log('numLoads:',numLoads);
    // get the Channel data with a webservice call
- 	$.getJSON('https://www.thingspeak.com/channels/'+channelNumber+'/feed.json?callback=?&amp;offset=0&amp;start=2013-01-20T00:00:00;end='+end+';key='+key, function(data) 
+ 	$.getJSON('https://api.thingspeak.com/channels/'+channelNumber+'/feed.json?offset=0&amp;start=2013-01-20T00:00:00;end='+end+';key='+key, function(data) 
    {
 	   // if no access
 	   if (data == '-1') {
@@ -411,41 +410,44 @@ function loadChannelHistory(sentChannelIndex,channelNumber,key,sentFieldList,sen
      if (numLoads<maxLoads) {loadChannelHistory(channelIndex,channelNumber,key,fieldList,numLoads,maxLoads);}
 	 });
 }
+
   </script>
-  	<title>Wetterstation</title>    
+  	<title>Tommy pi</title>    
 
   </head>
   <body style="                      background-color: white;">
-    <div id="chart-container" style="height: 600px; font-family: Tahoma; font-size: small"><br>
-      Multi Channel Loading...<br>
+    <div id="chart-container" style="height: 400px;"><br>
+      Highstock Chart Here<br>
     </div>
     <div id="below chart"> <button style="width: 89px; margin-top: -18px;" value="Hide All"
         name="Hide All Button"
-        onclick="HideAll();">hide
-        all</button><button style="width: 162px; margin-top: -18px;" value="Load More Data"
+        onclick="HideAll();">Hide
+        All</button><button style="width: 162px; margin-top: -18px;" value="Load More Data"
         name="Load More Data"
-        onclick="loadOneChannel();">load more</button>
+        onclick="loadOneChannel();">Load
+        More Historical Data </button>
       <select id="Channel Select">
       </select>
       <select id="Loads">
-        <option value="1">1 load</option>
-        <option value="2">2 loads</option>
-        <option value="3">3 loads</option>
-        <option value="4">4 loads</option>
-        <option value="5" selected="selected">5 loads</option>
-        <option value="6">6 loads</option>
-        <option value="7">7 loads</option>
-        <option value="8">8 loads</option>
-        <option value="9">9 loads</option>
-        <option value="10">10 loads</option>
-        <option value="15">15 loads</option>
-        <option value="20">20 loads</option>
-        <option value="25">25 loads</option>
-        <option value="30">30 loads</option>
-        <option value="40">40 loads</option>
-        <option value="50">50 loads</option>
+        <option value="1">1 Load</option>
+        <option value="2">2 Loads</option>
+        <option value="3">3 Loads</option>
+        <option value="4">4 Loads</option>
+        <option value="5" selected="selected">5 Loads</option>
+        <option value="6">6 Loads</option>
+        <option value="7">7 Loads</option>
+        <option value="8">8 Loads</option>
+        <option value="9">9 Loads</option>
+        <option value="10">10 Loads</option>
+        <option value="15">15 Loads</option>
+        <option value="20">20 Loads</option>
+        <option value="25">25 Loads</option>
+        <option value="30">30 Loads</option>
+        <option value="40">40 Loads</option>
+        <option value="50">50 Loads</option>
       </select>
-      <input id="Update" name="Update" type="checkbox"><span style="font-family: Tahoma; font-size: small">update chart in real time</span> 
+      <input id="Update" name="Update" type="checkbox"><span style="font-family: Lucida Grande;">Update
+        Chart</span> <span id="Latency" style="font-family: Lucida Grande;">(Latency)</span>
     </div>
   </body>
 </html>

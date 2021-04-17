@@ -24,8 +24,8 @@ var channelsLoaded = 0;
 var channelKeys =[];
 //Change TO: display two fields from the same channel from a Rain gauge - 15min counts, and total counts
 //  src="https://api.thingspeak.com/channels/8652/charts/3?width=1300&height=400&results=1000&dynamic=true&title=Temp and RAM" ></iframe>
-channelKeys.push({channelNumber:1287367, name:'Pi4',key:'XXXXXXXXXXXXXXXXXX',
-   fieldList:[{field:1,axis:'C'},{field:4,axis:'R'}]});
+channelKeys.push({channelNumber:647418, name:'bme280 pi4',key:'',
+   fieldList:[{field:3,axis:'C'},{field:5,axis:'C'},{field:7,axis:'R'}]});
  
     
 // user's timezone offset
@@ -271,12 +271,12 @@ $(document).ready(function()
 		},
 		yAxis: [{
             title: {
-                text: 'Temp'
+                text: 'humidty'
             },
             id: 'R'
     }, {
             title: {
-                text: 'RAM usage'
+                text: 'temp'
             },
             opposite: true,
             id: 'C'
@@ -412,7 +412,7 @@ function loadChannelHistory(sentChannelIndex,channelNumber,key,sentFieldList,sen
 }
 
   </script>
-  	<title>Tommy pi</title>    
+  	<title>d1 mini</title>    
 
   </head>
   <body style="                      background-color: white;">
